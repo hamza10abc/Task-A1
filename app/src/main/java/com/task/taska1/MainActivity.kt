@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
         sortTasksByFromDateAndTime()
 
         // Start the automatic deletion check
-//        startAutoDeletionCheck()
 
         swipeRefreshLayout.setOnRefreshListener {
             refreshTaskList() // Call the method to refresh the task list
@@ -66,23 +65,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
     // Method to refresh the task list
-//    private fun refreshTaskList() {
-//
-//        checkForEndedTasks_new()
-//
-//        // Reload tasks from the JSON file
-//        taskList.clear() // Clear the current task list
-//        taskList.addAll(readJsonFile() ?: ArrayList()) // Re-populate with fresh data
-//
-//        // Notify the adapter of data changes
-//        adapter.notifyDataSetChanged()
-//
-//
-//        // Stop the refreshing animation
-//        swipeRefreshLayout.isRefreshing = false
-//
-//
-//    }
 
     private fun refreshTaskList() {
         Log.d("TaskListBeforeRefresh", "Current tasks: ${taskList.map { it.title to it.countDownTime }}")
@@ -113,32 +95,11 @@ class MainActivity : AppCompatActivity() {
             override fun run() {
 //                checkForEndedTasks()  // Check for tasks that have ended
                 checkForEndedTasks_new()
-                handler.postDelayed(this, 60000) // Re-run every minute
             }
         })
     }
 
     // Method to check if any task has ended
-    private fun checkForEndedTasks() {
-        val iterator = taskList.iterator()
-
-        while (iterator.hasNext()) {
-            val task = iterator.next()
-
-            // Assuming the TaskAdapter provides a way to get the current countdown status
-            val taskCountDownText = task.countDownTime  // Retrieve the countdown text from your task model
-
-            if (taskCountDownText == "Task ended") {
-                Log.d("TaskAutoDelete", "Task has ended. Deleting task: ${task.title}")
-                iterator.remove()  // Remove ended task from list
-            }
-        }
-
-        // Notify the adapter of the changed data
-        adapter.notifyDataSetChanged()
-        saveTasksToFile()  // Save updated task list back to the file
-    }
-
     private fun checkForEndedTasks_new() {
         val tasksToDelete = mutableListOf<Task>()
 

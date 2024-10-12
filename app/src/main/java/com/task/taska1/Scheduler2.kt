@@ -36,7 +36,6 @@ class Scheduler2 : AppCompatActivity() {
         val From_Time_crd: CardView = findViewById(R.id.From_Time_crd)
         val To_Date_crd: CardView = findViewById(R.id.To_Date_crd)
         val To_Time_crd: CardView = findViewById(R.id.To_Time_crd)
-        val Next_btn: Button = findViewById(R.id.Next_btn)
         val Tv_fromDate: TextView = findViewById(R.id.Tv_fromDate)
         val Tv_fromTime: TextView = findViewById(R.id.Tv_fromTime)
         val Tv_ToDate: TextView = findViewById(R.id.Tv_ToDate)
@@ -83,14 +82,6 @@ class Scheduler2 : AppCompatActivity() {
         // Handle Next button click
         Next_btn.setOnClickListener {
             if (validateInputs()) {
-                val intent = Intent(this, Scheduler3::class.java)
-                intent.putExtra("Title", title)
-                intent.putExtra("Description", description)
-                intent.putExtra("From_Date", fromDate)
-                intent.putExtra("From_Time", fromTime)
-                intent.putExtra("To_Date", toDate)
-                intent.putExtra("To_Time", toTime)
-                startActivity(intent)
             } else {
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }
