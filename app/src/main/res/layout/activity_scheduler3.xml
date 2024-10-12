@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Scheduler3">
+
+    <TextView
+        android:id="@+id/Tv_Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="SELECTOR"
+        android:textSize="20dp"
+        android:layout_marginTop="30dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/before_safe_time_crd"
+        android:layout_below="@id/Tv_Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+
+        android:layout_margin="20dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00BCD4"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/Tv_head_BeforeSafeTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Before Safe Time (in minutes)"
+                android:textSize="15dp"
+                android:textColor="@color/black"
+
+                android:textStyle="bold"/>
+
+            <EditText
+                android:layout_below="@id/Tv_head_BeforeSafeTime"
+                android:id="@+id/Tv_beforeSafeTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Before Safe Time (Minutes)"
+                android:textColor="@color/black"
+                android:inputType="number"
+                android:textSize="20dp"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/after_safe_time_crd"
+        android:layout_below="@id/before_safe_time_crd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+
+        android:layout_margin="20dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00BCD4"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/Tv_head_AfterSafeTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="After Safe Time (in minutes)"
+                android:textSize="15dp"
+                android:textColor="@color/black"
+
+                android:textStyle="bold"/>
+
+            <EditText
+                android:layout_below="@id/Tv_head_AfterSafeTime"
+                android:id="@+id/Tv_AfterSafeTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Before Safe Time (Minutes)"
+                android:textColor="@color/black"
+                android:inputType="number"
+                android:textSize="20dp"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:layout_below="@id/after_safe_time_crd"
+        android:id="@+id/Done_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="Done"
+        android:textSize="15dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+</RelativeLayout>

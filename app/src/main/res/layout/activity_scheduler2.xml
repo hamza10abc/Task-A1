@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Scheduler2">
+
+    <TextView
+        android:id="@+id/Tv_Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="SELECTOR"
+        android:textSize="20dp"
+        android:layout_marginTop="30dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/From_Date_crd"
+        android:layout_below="@id/Tv_Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+
+        android:layout_margin="20dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00BCD4"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/Tv_head_fromDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="FROM DATE"
+                android:textSize="15dp"
+                android:textColor="@color/black"
+
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_below="@id/Tv_head_fromDate"
+                android:id="@+id/Tv_fromDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Click to select From date"
+                android:textColor="@color/black"
+                android:textSize="20dp"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/From_Time_crd"
+        android:layout_below="@id/From_Date_crd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+
+        android:layout_margin="20dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00BCD4"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/Tv_head_fromTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="FROM TIME"
+                android:textSize="15dp"
+                android:textColor="@color/black"
+
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_below="@id/Tv_head_fromTime"
+                android:id="@+id/Tv_fromTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Click to select From time"
+                android:textColor="@color/black"
+                android:textSize="20dp"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/To_Date_crd"
+        android:layout_below="@id/From_Time_crd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        android:layout_margin="20dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00BCD4"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/Tv_head_ToDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TO DATE"
+                android:textSize="15dp"
+                android:textColor="@color/black"
+
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_below="@id/Tv_head_ToDate"
+                android:id="@+id/Tv_ToDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Click to select To date"
+                android:textColor="@color/black"
+                android:textSize="20dp"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/To_Time_crd"
+        android:layout_below="@id/To_Date_crd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        android:layout_margin="20dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00BCD4"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/Tv_head_ToTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TO TIME"
+                android:textSize="15dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_below="@id/Tv_head_ToTime"
+                android:id="@+id/Tv_toTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Click to select To time"
+                android:textColor="@color/black"
+                android:textSize="20dp"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:layout_below="@id/To_Time_crd"
+        android:id="@+id/Next_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="Next"
+        android:textSize="15dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+</RelativeLayout>
