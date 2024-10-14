@@ -4,11 +4,17 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.EditText
+import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.File
 //import kotlinx.android.synthetic.main.scheduler2.*
 import java.util.*
 
@@ -30,6 +36,7 @@ class Scheduler2 : AppCompatActivity() {
         title = intent.getStringExtra("Title")
         description = intent.getStringExtra("Description")
 
+        val Next_btn = findViewById<Button>(R.id.Done_btn)
 //        val classButton: Button = findViewById(R.id.button_class)
 
         val From_Date_crd: CardView = findViewById(R.id.From_Date_crd)
@@ -41,6 +48,27 @@ class Scheduler2 : AppCompatActivity() {
         val Tv_ToDate: TextView = findViewById(R.id.Tv_ToDate)
         val Tv_toTime: TextView = findViewById(R.id.Tv_toTime)
         val Tv_Title: TextView = findViewById(R.id.Tv_Title)
+
+
+        val adv_txt = findViewById<TextView>(R.id.adv_opt)
+        val adv_opt_layout = findViewById<RelativeLayout>(R.id.adv_opt_layout)
+        val Done_btn = findViewById<Button>(R.id.Done_btn)
+        val safeTimeBefore1 = findViewById<EditText>(R.id.Tv_beforeSafeTime)
+        val safeTimeAfter1 = findViewById<EditText>(R.id.Tv_AfterSafeTime)
+
+        adv_opt_layout.setVisibility(View.GONE)
+        adv_txt.text = "Click to open Advance options"
+
+        adv_txt.setOnClickListener {
+            if ( adv_opt_layout.visibility == View.GONE){
+                adv_opt_layout.setVisibility(View.VISIBLE)
+                adv_txt.text = "Click to close Advance options"
+            }
+            else{
+                adv_opt_layout.setVisibility(View.GONE)
+                adv_txt.text = "Click to open Advance options"
+            }
+        }
 
         Tv_Title.text = title
 
@@ -82,6 +110,36 @@ class Scheduler2 : AppCompatActivity() {
         // Handle Next button click
         Next_btn.setOnClickListener {
             if (validateInputs()) {
+
+                val safeTimeBefore = safeTimeBefore1.text.toString()
+                val safeTimeAfter = safeTimeAfter1.text.toString()
+                val title = title.toString()
+                val description = description.toString()
+                val fromDate = fromDate.toString()
+                val fromTime = fromTime.toString()
+                val toDate = toDate.toString()
+                val toTime = toTime.toString()
+
+                val task = Task(
+                    title = title,
+                    description = description,
+                    fromDate = fromDate,
+                    fromTime = fromTime,
+                    toDate = toDate,
+                    toTime = toTime,
+                    safeTimeBefore = safeTimeBefore,
+                    safeTimeAfter = safeTimeAfter,
+                )
+
+                // Save the task to Task.json
+                saveTaskToJson(task)
+
+                // Optionally, show a message
+                Toast.makeText(this, "Task saved successfully!", Toast.LENGTH_SHORT).show()
+
+                // Navigate to the next activity or finish
+                startActivity(Intent(this, MainActivity::class.java))
+
             } else {
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }
@@ -90,6 +148,47 @@ class Scheduler2 : AppCompatActivity() {
         }
 
 
+    }
+
+    private fun saveTaskToJson(task: Task) {
+        // Directory for Task.json
+        val dir = File(getExternalFilesDir(null), "Taskfiles")
+        if (!dir.exists()) {
+            dir.mkdirs() // Create directory if not exists
+        }
+
+        // Task.json file
+        val taskFile = File(dir, "Task.json")
+
+        // Read the existing file if it exists, or create a new JSONArray if not
+        val jsonArray: JSONArray = if (taskFile.exists()) {
+            val content = taskFile.readText()
+            if (content.isNotEmpty()) {
+                JSONArray(content)
+            } else {
+                JSONArray()
+            }
+        } else {
+            JSONArray()
+        }
+
+        // Create a new JSON object from the task data
+        val taskJsonObject = JSONObject().apply {
+            put("title", task.title)
+            put("description", task.description)
+            put("fromDate", task.fromDate)
+            put("fromTime", task.fromTime)
+            put("toDate", task.toDate)
+            put("toTime", task.toTime)
+            put("safeTimeBefore", task.safeTimeBefore)
+            put("safeTimeAfter", task.safeTimeAfter)
+        }
+
+        // Append the new task to the JSON array
+        jsonArray.put(taskJsonObject)
+
+        // Write the updated array back to the file
+        taskFile.writeText(jsonArray.toString())
     }
 
     // Function to show date picker dialog

@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Scheduler2">
+    tools:context=".Scheduler2"
+    android:background="@color/black">
 
     <TextView
         android:id="@+id/Tv_Title"
@@ -14,7 +15,18 @@
         android:layout_centerHorizontal="true"
         android:text="SELECTOR"
         android:textSize="20dp"
+        android:textColor="@color/white"
         android:layout_marginTop="30dp"/>
+
+    <ScrollView
+        android:layout_below="@id/Tv_Title"
+        android:id="@+id/scrollVieww"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/From_Date_crd"
@@ -164,12 +176,123 @@
 
             </androidx.cardview.widget.CardView>
 
-                <Button
-                    android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/adv_opt"
+                android:layout_below="@id/To_Time_crd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Click for Advance options"
+                android:layout_centerHorizontal="true"
+                android:textSize="20dp"
+                android:textColor="#FFF38C"
+                android:layout_marginTop="15dp"/>
+
+            <RelativeLayout
+                android:id="@+id/adv_opt_layout"
+                android:layout_below="@id/adv_opt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/before_safe_time_crd"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:textSize="15dp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"/>
+                    app:cardCornerRadius="12dp"
+
+                    android:layout_margin="20dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#00BCD4"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/Tv_head_BeforeSafeTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Before Safe Time (in minutes)"
+                            android:textSize="15dp"
+                            android:textColor="@color/black"
+
+                            android:textStyle="bold"/>
+
+                        <EditText
+                            android:layout_below="@id/Tv_head_BeforeSafeTime"
+                            android:id="@+id/Tv_beforeSafeTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Enter Before Safe Time (Minutes)"
+                            android:textColor="@color/black"
+                            android:inputType="number"
+                            android:textSize="20dp"/>
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/after_safe_time_crd"
+                    android:layout_below="@id/before_safe_time_crd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="12dp"
+
+                    android:layout_margin="20dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#00BCD4"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/Tv_head_AfterSafeTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="After Safe Time (in minutes)"
+                            android:textSize="15dp"
+                            android:textColor="@color/black"
+
+                            android:textStyle="bold"/>
+
+                        <EditText
+                            android:layout_below="@id/Tv_head_AfterSafeTime"
+                            android:id="@+id/Tv_AfterSafeTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Enter Before Safe Time (Minutes)"
+                            android:textColor="@color/black"
+                            android:inputType="number"
+                            android:textSize="20dp"/>
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+            </RelativeLayout>
+
+            <Button
+                android:layout_below="@+id/adv_opt_layout"
+                android:id="@+id/Done_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
+                android:text="Done"
+                android:textSize="15dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
 
 </RelativeLayout>

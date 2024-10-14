@@ -45,7 +45,23 @@ class TaskAdapter(
         holder.title.text = task.title
         holder.description1.text = task.description
         holder.description2.text = task.description
-        holder.timeRange.text = "${task.fromDate} - ${task.toDate}  |  ${task.fromTime} - ${task.toTime}"
+
+        // Format the date from DD/MM/YYYY to 12 Oct 2024
+        val inputDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val outputDateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+
+        val formattedFromDate = outputDateFormat.format(inputDateFormat.parse(task.fromDate))
+        val formattedToDate = outputDateFormat.format(inputDateFormat.parse(task.toDate))
+
+        // Format the time from 24-hour to 12-hour format
+        val inputTimeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val outputTimeFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+
+        val formattedFromTime = outputTimeFormat.format(inputTimeFormat.parse(task.fromTime))
+        val formattedToTime = outputTimeFormat.format(inputTimeFormat.parse(task.toTime))
+
+//        holder.timeRange.text = "${task.fromDate} - ${task.toDate}  |  ${task.fromTime} - ${task.toTime}"
+        holder.timeRange.text = "$formattedToDate - $formattedFromDate   |   $formattedFromTime - $formattedToTime"
 
         // Initially, DescriptionLayout1 is visible, DescriptionLayout2 is GONE
         holder.descriptionLayout1.visibility = View.VISIBLE
