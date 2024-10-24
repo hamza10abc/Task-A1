@@ -98,66 +98,6 @@ class TaskAdapter(
         return taskList.size
     }
 
-
-    // Method to start the live countdown
-//    private fun startCountDown(fromDate: String, fromTime: String, toDate: String, toTime: String, countDownTextView: TextView, task: Task) {
-//        val dateTimeFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-//
-//        try {
-//            val taskStartDate = dateTimeFormat.parse("$fromDate $fromTime")
-//            val taskEndDate = dateTimeFormat.parse("$toDate $toTime")
-//            val handler = Handler(Looper.getMainLooper())
-//            handler.post(object : Runnable {
-//                override fun run() {
-//                    val currentTime = Date()
-//                    val startTimeDiff = taskStartDate.time - currentTime.time
-//                    val endTimeDiff = taskEndDate.time - currentTime.time
-//
-//                    if (startTimeDiff > 0) {
-//                        // Countdown for task start time
-//                        val days = TimeUnit.MILLISECONDS.toDays(startTimeDiff)
-//                        val hours = TimeUnit.MILLISECONDS.toHours(startTimeDiff) % 24
-//                        val minutes = TimeUnit.MILLISECONDS.toMinutes(startTimeDiff) % 60
-//                        val seconds = TimeUnit.MILLISECONDS.toSeconds(startTimeDiff) % 60
-//
-//                        val countDownText = if (days > 0) {
-//                            String.format("Starting in -> %02d:%02d:%02d:%02d", days, hours, minutes, seconds)
-//                        } else {
-//                            String.format("Starting in -> %02d:%02d:%02d", hours, minutes, seconds)
-//                        }
-//
-//                        countDownTextView.text = countDownText
-//                    } else if (endTimeDiff > 0) {
-//                        // Countdown for task end time
-//                        val days = TimeUnit.MILLISECONDS.toDays(endTimeDiff)
-//                        val hours = TimeUnit.MILLISECONDS.toHours(endTimeDiff) % 24
-//                        val minutes = TimeUnit.MILLISECONDS.toMinutes(endTimeDiff) % 60
-//                        val seconds = TimeUnit.MILLISECONDS.toSeconds(endTimeDiff) % 60
-//
-//                        val countDownText = if (days > 0) {
-//                            String.format("Ending in -> %02d:%02d:%02d:%02d", days, hours, minutes, seconds)
-//                        } else {
-//                            String.format("Ending in -> %02d:%02d:%02d", hours, minutes, seconds)
-//                        }
-//
-//                        countDownTextView.text = countDownText
-//                    } else {
-//                        countDownTextView.text = "Task ended"
-//                    }
-//
-//                    // Update the Task instance with the current countdown text
-//                    task.countDownTime = countDownTextView.text.toString()
-//
-//                    // Update every second
-//                    handler.postDelayed(this, 1000)
-//                }
-//            })
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//            countDownTextView.text = "Invalid time"
-//        }
-//    }
-
     private fun startCountDown(fromDate: String, fromTime: String, toDate: String, toTime: String, countDownTextView: TextView, task: Task) {
         val dateTimeFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
 

@@ -1,5 +1,6 @@
 package com.task.taska1
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
@@ -15,6 +16,7 @@ import androidx.cardview.widget.CardView
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
+import java.text.SimpleDateFormat
 //import kotlinx.android.synthetic.main.scheduler2.*
 import java.util.*
 
@@ -26,6 +28,7 @@ class Scheduler2 : AppCompatActivity() {
     private var toTime: String? = null
     private var title: String? = null
     private var description: String? = null
+    
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,45 +113,127 @@ class Scheduler2 : AppCompatActivity() {
         // Handle Next button click
         Next_btn.setOnClickListener {
             if (validateInputs()) {
-
-                val safeTimeBefore = safeTimeBefore1.text.toString()
-                val safeTimeAfter = safeTimeAfter1.text.toString()
-                val title = title.toString()
-                val description = description.toString()
-                val fromDate = fromDate.toString()
-                val fromTime = fromTime.toString()
-                val toDate = toDate.toString()
-                val toTime = toTime.toString()
-
-                val task = Task(
-                    title = title,
-                    description = description,
-                    fromDate = fromDate,
-                    fromTime = fromTime,
-                    toDate = toDate,
-                    toTime = toTime,
-                    safeTimeBefore = safeTimeBefore,
-                    safeTimeAfter = safeTimeAfter,
+                val newTask = Task(
+                    title = title.toString(),
+                    description = description.toString(),
+                    fromDate = fromDate.toString(),
+                    fromTime = fromTime.toString(),
+                    toDate = toDate.toString(),
+                    toTime = toTime.toString(),
+                    safeTimeBefore = safeTimeBefore1.text.toString(),
+                    safeTimeAfter = safeTimeAfter1.text.toString(),
                 )
 
-                // Save the task to Task.json
-                saveTaskToJson(task)
+                val clashingTasks = checkForClashingTasks(newTask)
 
-                // Optionally, show a message
-                Toast.makeText(this, "Task saved successfully!", Toast.LENGTH_SHORT).show()
-
-                // Navigate to the next activity or finish
-                startActivity(Intent(this, MainActivity::class.java))
-
+                if (clashingTasks.isNotEmpty()) {
+                    // Show dialog with clashing tasks
+                    showClashingTasksDialog(clashingTasks, newTask)
+                } else {
+                    // No clashing tasks, save the new task
+                    saveTaskToJson(newTask)
+                    Toast.makeText(this, "Task saved successfully!", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, MainActivity::class.java))
+                }
             } else {
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }
-
-
         }
 
 
+
     }
+
+    private fun showClashingTasksDialog(clashingTasks: List<Task>, newTask: Task) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Clashing Tasks Found")
+
+        val message = StringBuilder()
+        for (task in clashingTasks) {
+            message.append("Title: ${task.title}\n")
+            message.append("From: ${task.fromDate} ${task.fromTime}\n")
+            message.append("To: ${task.toDate} ${task.toTime}\n\n")
+        }
+
+        builder.setMessage(message.toString())
+
+        // Positive button to dismiss the dialog
+        builder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss() // Just dismiss the dialog
+        }
+
+        // Negative button for SYSTEM OVERRIDE to ignore clashing and save the task
+        builder.setNegativeButton("SYSTEM OVERRIDE") { dialog, _ ->
+            // Save the new task despite clashing
+            saveTaskToJson(newTask)
+            Toast.makeText(this, "Task saved successfully with SYSTEM OVERRIDE!", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+
+        builder.show()
+    }
+
+
+
+    private fun checkForClashingTasks(newTask: Task): List<Task> {
+        val existingTasksJson = readTasksFromJson()
+        val clashingTasks = mutableListOf<Task>()
+
+        for (i in 0 until existingTasksJson.length()) {
+            val taskJson = existingTasksJson.getJSONObject(i)
+            val existingTask = Task(
+                title = taskJson.getString("title"),
+                description = taskJson.getString("description"),
+                fromDate = taskJson.getString("fromDate"),
+                fromTime = taskJson.getString("fromTime"),
+                toDate = taskJson.getString("toDate"),
+                toTime = taskJson.getString("toTime"),
+                safeTimeBefore = taskJson.getString("safeTimeBefore"),
+                safeTimeAfter = taskJson.getString("safeTimeAfter")
+            )
+
+            // Check if newTask overlaps with existingTask
+            if (isOverlapping(newTask, existingTask)) {
+                clashingTasks.add(existingTask)
+            }
+        }
+
+        return clashingTasks
+    }
+
+    private fun isOverlapping(taskA: Task, taskB: Task): Boolean {
+        val taskAStartTime = getDateTime(taskA.fromDate, taskA.fromTime)
+        val taskAEndTime = getDateTime(taskA.toDate, taskA.toTime)
+
+        val taskBStartTime = getDateTime(taskB.fromDate, taskB.fromTime)
+        val taskBEndTime = getDateTime(taskB.toDate, taskB.toTime)
+
+        // Check for overlap
+        return !(taskAEndTime.before(taskBStartTime) || taskAStartTime.after(taskBEndTime))
+    }
+
+    private fun getDateTime(date: String, time: String): Date {
+        val format = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+        return format.parse("$date $time")!!
+    }
+
+    private fun readTasksFromJson(): JSONArray {
+        val dir = File(getExternalFilesDir(null), "Taskfiles")
+        val taskFile = File(dir, "Task.json")
+
+        return if (taskFile.exists()) {
+            val content = taskFile.readText()
+            if (content.isNotEmpty()) {
+                JSONArray(content)
+            } else {
+                JSONArray()
+            }
+        } else {
+            JSONArray()
+        }
+    }
+
+
 
     private fun saveTaskToJson(task: Task) {
         // Directory for Task.json
